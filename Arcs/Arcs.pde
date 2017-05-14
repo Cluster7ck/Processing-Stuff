@@ -5,7 +5,8 @@ int n = 10;
 boolean isStrokeCapProj = false; 
 
 color[] cols = {#3B8FA7,#E5ACC8,#E6B052,#C85173,#72C5DD,#CA5387,#E1935D};
-//#C94A54,#72C5DD
+//color[] cols = {#1D262D,#4F67C0,#63B795,#C06154};
+//color[] cols = {#1B1C2E,#712A47,#C4724A,#6E59B2,#C06154};
 
 void setup() {
   size(600, 600);
