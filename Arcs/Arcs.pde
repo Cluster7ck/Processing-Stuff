@@ -1,11 +1,11 @@
 ArrayList<Circle> circles;
-int n = 4;
+int n = 8;
 boolean isStrokeCapProj = false; 
 
-color[] cols = {#3B8FA7,#E5ACC8,#E6B052,#C85173};
+color[] cols = {#3B8FA7,#E5ACC8,#E6B052,#C85173,#3B8FA7,#E5ACC8,#E6B052,#C85173};
 
 void setup() {
-  size(800, 800);
+  size(1200, 1200);
   circles = new ArrayList<Circle>();
   generateNewCircles();
 }
@@ -23,11 +23,15 @@ float map_range(float value, float fromLow, float fromHigh, float toLow, float t
 }
 
 void generateNewCircles(){
-  float radius = random(120,250);
+  float radius = random(120/2,250/2);
+  float speed = 0.06;
   circles.clear();
   for(int i = 0; i < n; i++){
-    circles.add(new Circle(new PVector(width/2,height/2),radius,(int)random(3,5), cols[i],(int)random(20,60),random(0.01,0.06)));
-    radius += random(120,210);
+    //speed = random(0.01,0.05)
+    int strokeWeight = (int)random(20,60)/2;
+    circles.add(new Circle(new PVector(width/2,height/2),radius,(int)random(3,5), cols[i], strokeWeight,speed));
+    radius += random(120/2,210/2);
+    speed -= 0.06/n;
   }
 }
 
