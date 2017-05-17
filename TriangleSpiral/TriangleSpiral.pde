@@ -38,14 +38,12 @@ float map_range(float value, float fromLow, float fromHigh, float toLow, float t
 
 ArrayList<PVector> calcTrianglePos(PVector center, float baseSize, float sizeInc){
   ArrayList<PVector> positions = new ArrayList<PVector>();
-  //Start Triangle
-  //float triSide = sqrt(cos(2.0944));
 
+  
   float triSide = baseSize * 1/sin(30*PI/180) * sin(120*PI/180);
-
   float b = sqrt(sq(baseSize)-sq(triSide/2));
-  print("TriSide: "+triSide+" b: "+b+"\n");
 
+  //Start Triangle
   PVector p0 = new PVector(center.x - triSide/2, center.y + b);
   PVector p1 = new PVector(center.x + triSide/2, center.y + b);
   PVector p2 = new PVector(center.x , center.y - baseSize);
@@ -66,8 +64,8 @@ ArrayList<PVector> calcTrianglePos(PVector center, float baseSize, float sizeInc
 
 ArrayList<PVector> calcSquareePos(PVector center, float baseSize, float sizeInc){
   ArrayList<PVector> positions = new ArrayList<PVector>();
-  //Start Triangle
 
+  //Start Square
   PVector p0 = new PVector(center.x - baseSize, center.y + baseSize);
   PVector p1 = new PVector(center.x + baseSize, center.y + baseSize);
   PVector p2 = new PVector(center.x + baseSize , center.y - baseSize);
