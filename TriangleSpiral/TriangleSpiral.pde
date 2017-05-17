@@ -28,9 +28,11 @@ void draw() {
     else{
       sI -= 0.0005;
     }
+    /*
+    //Shows sI on screen
     textSize(32);
     fill(0, 102, 153);
-    text(sI, 10, 30); 
+    text(sI, 10, 30);*/
   }
   /*
   if(running){
