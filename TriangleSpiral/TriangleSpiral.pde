@@ -1,10 +1,9 @@
 ArrayList<PVector> triPos;
-ArrayList<PVector> squarePos;
 
 int lineCount = 0;
-int triangleBaseSize = 1;
+int triangleBaseSize = 10;
 float progress = 0;
-float lineScale = 1;
+float lineScale = 1.1;
 boolean running = false;
 boolean decrease = false;
 
@@ -15,28 +14,9 @@ void setup() {
 }
 
 void draw() {
-  /*
   // basically just for easier gif making ;)
   if(running){
-    background(255);
-    
-    //lineScale has a meaningful visual representation from 0.91 - 1.1
-    float lerpV = map_range(lineScale,0.91,1.1,0,1);
-    drawCenterTrig(new PVector(width/2,height/2), 100, lerpColor(color(#ff66a3), color(#b380ff), lerpV));
-    triPos = calcTrianglePos(new PVector(width/2,height/2), 100,lineScale);
-    for(int i = 0; i < triPos.size()-1; i++){
-      line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
-    }
-    if(!decrease){
-      lineScale += 0.0005;
-    } 
-    else{
-      lineScale -= 0.0005;
-    }
-  }*/
-
-  if(running){
-    drawTriangleSpiral();
+    drawGrowingTriangleSpiral();
   }
 }
 
@@ -73,23 +53,17 @@ void drawTriangleSpiral(){
 void drawGrowingTriangleSpiral(){
     background(255);
 
-    for(int i = 3; i < lineCount; i++){
-      if(i >=3){
-        drawTriangle(triPos.get(i-3), triPos.get(i), triPos.get(i-2), color((int)map_range(i,0,triPos.size(),0,255)));
-      }
-    }
-    for(int i = 0; i < lineCount-1; i++){
-      stroke(color((int)map_range(i,0,triPos.size(),0,255)));
+    for(int i = 0; i < lineCount; i++){
       line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
     }
+
     //Lerp last line
     if(lineCount < triPos.size()-1){
       PVector lerpedV = PVector.lerp(triPos.get(lineCount),triPos.get(lineCount+1),progress);
-      stroke(0);
       line(triPos.get(lineCount).x, triPos.get(lineCount).y, lerpedV.x, lerpedV.y);
     }
 
-    progress += 0.5;
+    progress += map_range(lineCount,0,triPos.size(),0.1,0.08);//0.08; 
     if(progress >= 1){
       progress = 0;
       if(lineCount+1 <= triPos.size()){
@@ -121,12 +95,7 @@ void drawCenterTrig(PVector center, float baseSize, color col){
   PVector p1 = new PVector(center.x + triSide/2, center.y + b);
   PVector p2 = new PVector(center.x , center.y - baseSize);
 
-  beginShape(TRIANGLE_STRIP);
-  fill(col);
-  vertex(p0.x, p0.y);
-  vertex(p1.x, p1.y);
-  vertex(p2.x, p2.y);
-  endShape();
+  drawTriangle(p0, p1, p2, col);
 }
 
 // Calculates all Points for the triangle spiral
