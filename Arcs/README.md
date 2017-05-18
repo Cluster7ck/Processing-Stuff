@@ -1,1 +1,1 @@
-![Arcs](http://i.imgur.com/dpvElKb.gif)
+![Arcs](https://github.com/Cluster7ck/Processing-Stuff/Gifs/Arcs1.gif)

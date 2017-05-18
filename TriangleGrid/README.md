@@ -1,1 +1,1 @@
-![TriangleGrid](http://i.imgur.com/CFAkk6q.gif)
+![TriangleGrid](https://github.com/Cluster7ck/Processing-Stuff/Gifs/TriangleGrid1.gif)

@@ -1,1 +1,1 @@
-![Spiral](http://i.imgur.com/6B8coFf.gif)
+![Spiral](https://github.com/Cluster7ck/Processing-Stuff/Gifs/TriangleSpiral1.gif)
