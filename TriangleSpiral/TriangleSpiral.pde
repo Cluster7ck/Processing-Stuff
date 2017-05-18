@@ -1,17 +1,19 @@
 ArrayList<PVector> triPos;
 ArrayList<PVector> squarePos;
 
+int lineCount = 0;
 float progress = 0;
-float lineScale = 0.9;
+float lineScale = 1.1;
 boolean running = false;
 boolean decrease = false;
 
 void setup() {
   size(600, 600);
+  triPos = calcTrianglePos(new PVector(width/2,height/2), 100,lineScale);
 }
 
 void draw() {
-
+  /*
   // baasically just for easier gif making ;)
   if(running){
     background(255);
@@ -28,6 +30,21 @@ void draw() {
     } 
     else{
       lineScale -= 0.0005;
+    }
+  }*/
+
+  if(running){
+    background(255);
+    for(int i = 0; i < lineCount; i++){
+      line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
+    }
+    //Lerp last line
+    PVector lerpedV = PVector.lerp(triPos.get(lineCount),triPos.get(lineCount+1),progress);
+    line(triPos.get(lineCount).x, triPos.get(lineCount).y, lerpedV.x, lerpedV.y);
+    progress += 0.05;
+    if(progress >= 1){
+      progress = 0;
+      lineCount++;
     }
   }
 }
