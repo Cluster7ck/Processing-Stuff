@@ -2,19 +2,21 @@ ArrayList<PVector> triPos;
 ArrayList<PVector> squarePos;
 
 int lineCount = 0;
+int triangleBaseSize = 1;
 float progress = 0;
-float lineScale = 1.1;
+float lineScale = 1;
 boolean running = false;
 boolean decrease = false;
 
+
 void setup() {
   size(600, 600);
-  triPos = calcTrianglePos(new PVector(width/2,height/2), 100,lineScale);
+  triPos = calcTrianglePos(new PVector(width/2,height/2), triangleBaseSize,lineScale);
 }
 
 void draw() {
   /*
-  // baasically just for easier gif making ;)
+  // basically just for easier gif making ;)
   if(running){
     background(255);
     
@@ -34,23 +36,80 @@ void draw() {
   }*/
 
   if(running){
+    drawTriangleSpiral();
+  }
+}
+
+void drawTriangleSpiral(){
     background(255);
-    for(int i = 0; i < lineCount; i++){
+    
+    //lineScale has a meaningful visual representation from 0.91 - 1.1
+    float lerpV = map_range(lineScale,0.91,1.22,0,1);
+    drawCenterTrig(new PVector(width/2,height/2), triangleBaseSize, lerpColor(color(255), color(0), lerpV));
+    triPos = calcTrianglePos(new PVector(width/2,height/2), triangleBaseSize,lineScale);
+
+    //start at i = 3
+    for(int i = 3; i < triPos.size(); i++){
+      drawTriangle(triPos.get(i-3), triPos.get(i), triPos.get(i-2), color((int)map_range(i,0,triPos.size(),0,255)));
+    }
+
+    for(int i = 0; i < triPos.size()-1; i++){
+      stroke(color((int)map_range(i,0,triPos.size(),0,255)));
+      line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
+    }
+    if(!decrease){
+      lineScale += map_range(lineScale,0.91,1.2,0.0003,0.0008);//0.0003;
+      
+    } 
+    else{
+      lineScale -= map_range(lineScale,0.91,1.2,0.0003,0.0008);;//0.0003;
+    }
+    if(lineScale >= 1.19 ){
+      decrease = true;
+    }
+    print(lineScale+"\n");
+}
+
+void drawGrowingTriangleSpiral(){
+    background(255);
+
+    for(int i = 3; i < lineCount; i++){
+      if(i >=3){
+        drawTriangle(triPos.get(i-3), triPos.get(i), triPos.get(i-2), color((int)map_range(i,0,triPos.size(),0,255)));
+      }
+    }
+    for(int i = 0; i < lineCount-1; i++){
+      stroke(color((int)map_range(i,0,triPos.size(),0,255)));
       line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
     }
     //Lerp last line
-    PVector lerpedV = PVector.lerp(triPos.get(lineCount),triPos.get(lineCount+1),progress);
-    line(triPos.get(lineCount).x, triPos.get(lineCount).y, lerpedV.x, lerpedV.y);
-    progress += 0.05;
+    if(lineCount < triPos.size()-1){
+      PVector lerpedV = PVector.lerp(triPos.get(lineCount),triPos.get(lineCount+1),progress);
+      stroke(0);
+      line(triPos.get(lineCount).x, triPos.get(lineCount).y, lerpedV.x, lerpedV.y);
+    }
+
+    progress += 0.5;
     if(progress >= 1){
       progress = 0;
-      lineCount++;
+      if(lineCount+1 <= triPos.size()){
+        lineCount++;
+      }
     }
-  }
 }
 
 float map_range(float value, float fromLow, float fromHigh, float toLow, float toHigh) {
   return (value-fromLow)/(fromHigh-fromLow) * (toHigh-toLow) + toLow;
+}
+
+void drawTriangle(PVector p0, PVector p1, PVector p2, color col){
+  beginShape(TRIANGLE_STRIP);
+  fill(col);
+  noStroke();
+  vertex(p0.x, p0.y);
+  vertex(p1.x, p1.y);
+  vertex(p2.x, p2.y);
+  endShape();
 }
 
 void drawCenterTrig(PVector center, float baseSize, color col){
