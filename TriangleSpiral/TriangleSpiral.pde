@@ -1,49 +1,35 @@
 ArrayList<PVector> triPos;
 ArrayList<PVector> squarePos;
-int lc;
+
 float progress = 0;
-float sI = 0.9;
+float lineScale = 0.9;
 boolean running = false;
 boolean decrease = false;
 
 void setup() {
   size(600, 600);
-
 }
 
 void draw() {
-  //sI runs from 0.91 - 1.1
+
+  // baasically just for easier gif making ;)
   if(running){
     background(255);
-
-    float lerpV = map_range(sI,0.91,1.1,0,1);
+    
+    //lineScale has a meaningful visual representation from 0.91 - 1.1
+    float lerpV = map_range(lineScale,0.91,1.1,0,1);
     drawCenterTrig(new PVector(width/2,height/2), 100, lerpColor(color(#ff66a3), color(#b380ff), lerpV));
-    triPos = calcTrianglePos(new PVector(width/2,height/2), 100,sI);
+    triPos = calcTrianglePos(new PVector(width/2,height/2), 100,lineScale);
     for(int i = 0; i < triPos.size()-1; i++){
       line(triPos.get(i).x, triPos.get(i).y, triPos.get(i+1).x, triPos.get(i+1).y);
     }
     if(!decrease){
-      sI += 0.0005;
+      lineScale += 0.0005;
     } 
     else{
-      sI -= 0.0005;
+      lineScale -= 0.0005;
     }
-    /*
-    //Shows sI on screen
-    textSize(32);
-    fill(0, 102, 153);
-    text(sI, 10, 30);*/
   }
-  /*
-  if(running){
-    background(255);
-
-      squarePos = calcSquareePos(new PVector(width/2,height/2), 20,sI);
-      for(int i = 0; i < squarePos.size()-1; i++){
-        line(squarePos.get(i).x, squarePos.get(i).y, squarePos.get(i+1).x, squarePos.get(i+1).y);
-      }
-      sI += 0.001;
-  }*/
 }
 
 float map_range(float value, float fromLow, float fromHigh, float toLow, float toHigh) {
@@ -67,9 +53,9 @@ void drawCenterTrig(PVector center, float baseSize, color col){
   endShape();
 }
 
+// Calculates all Points for the triangle spiral
 ArrayList<PVector> calcTrianglePos(PVector center, float baseSize, float sizeInc){
   ArrayList<PVector> positions = new ArrayList<PVector>();
-
   
   float triSide = baseSize * 1/sin(30*PI/180) * sin(120*PI/180);
   float b = sqrt(sq(baseSize)-sq(triSide/2));
@@ -83,10 +69,13 @@ ArrayList<PVector> calcTrianglePos(PVector center, float baseSize, float sizeInc
   positions.add(p1);
   positions.add(p2);
 
-  int cycles = 100;
+  int cycles = 150;
+  // Next point is always in a line from the last point towards the next edge in sight (which is i-2)
   for(int i = 2; i < cycles; i++){
     PVector nextP;
-    PVector dirNextP = PVector.sub(positions.get(i-2),positions.get(i));    
+    PVector dirNextP = PVector.sub(positions.get(i-2),positions.get(i));
+
+    // All points lie past the target point by 1-sizeInc %
     if(i != cycles-1){
       nextP = PVector.add(positions.get(i), dirNextP.mult(sizeInc));
     }
