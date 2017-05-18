@@ -1,0 +1,1 @@
+![Spiral](http://i.imgur.com/6B8coFf.gif)
