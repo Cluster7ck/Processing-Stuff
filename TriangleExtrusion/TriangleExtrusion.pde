@@ -1,22 +1,18 @@
 ArrayList<PVector> triPos;
 
+boolean running = false;
 int triCount = 0;
 int triangleBaseSize = 10;
-float sizeIncrease = 01;
-
-float progress = 0;
-float lineScale = 1.1;
-boolean running = false;
-boolean decrease = false;
+float sizeIncrease = 1;
 PVector center = new PVector(width/2,height/2);
 PVector lastMousePos = new PVector(0,0);
 PVector displacement = new PVector(0,0);
-int startTime = millis();
+
 int lastFrame = 0;
 int accTime = 0;
 float[] preSides;
 float[] preB;
-int count = 5;
+int count = 200;
 int curFrameTime = 0;
 float theta = 0;
 
