@@ -73,8 +73,8 @@ float map_range(float value, float fromLow, float fromHigh, float toLow, float t
 
 void drawTriangle(PVector p0, PVector p1, PVector p2, color col){
   beginShape(TRIANGLES);
-  //fill(col);
-  stroke(0);
+  fill(col);
+  noStroke();
   vertex(p0.x, p0.y);
   vertex(p1.x, p1.y);
   vertex(p2.x, p2.y);
