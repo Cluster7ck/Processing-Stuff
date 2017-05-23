@@ -1,0 +1,1 @@
+![Spiral](https://github.com/Cluster7ck/Processing-Stuff/raw/master//Gifs/TriangleSpiral1.gif)

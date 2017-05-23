@@ -133,16 +133,6 @@ void draw() {
       }
     }
   }
-/*
-  for(int i = 0; i<triangleLayer1.size();i++){
-    
-    triangleLayer2.get(i).drawTriangle(triangleLayer2.get(i).size);
-    Triangle tri = triangleLayer1.get(i);
-    tri.pulse();
-    tri.drawTriangle(tri.size);
-    //tri.drawTriangle(tri.size);
-    //print("x,y: ("+tri.center.x+","+tri.center.y+") Size: "+tri.size+"\n");
-  }*/
 }
 
 float map_range(float value, float fromLow, float fromHigh, float toLow, float toHigh) {
