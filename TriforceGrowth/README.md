@@ -1,1 +1,1 @@
-![TriangleGrid](https://github.com/Cluster7ck/Processing-Stuff/raw/master//Gifs/TriangleGrid1.gif)
+![TriforceGrowth](https://github.com/Cluster7ck/Processing-Stuff/raw/master//Gifs/TriforceGrowth.gif)
