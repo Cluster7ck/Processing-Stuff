@@ -17,7 +17,7 @@ int curFrameTime = 0;
 float theta = 0;
 
 void setup() {
-  size(800, 800);
+  size(600, 600);
   lastFrame = millis();  
   //Precalculate the triangle base values so we don't have to calc them every frame
   preSides = new float[count];
@@ -32,32 +32,34 @@ void setup() {
 
 void draw() {
   int deltaTime = millis() - lastFrame;
-
-  accTime += deltaTime;
-  if(accTime >= 100){
-    accTime = 0;
-    if(triCount < count){
-      triCount += 1;
+  if(running){
+    accTime += deltaTime;
+    if(accTime >= 100){
+      accTime = 0;
+      if(triCount < count){
+        triCount += 1;
+      }
     }
-  }
-  background(255);
-  //PVector mousePos = new PVector(mouseX,mouseY);
-  float x = 1*cos(theta)+width/2;
-  float y = 1*sin(theta)+height/2;
-  PVector mousePos = new PVector(x,y);
-  theta += 0.1;
-  displacement = PVector.sub(mousePos,new PVector(width/2,height/2));
-  displacement.normalize();
-  triPos = calcTrianglePos(new PVector(width/2,height/2), displacement, triangleBaseSize, sizeIncrease, triCount);
+    background(255);
+    //PVector mousePos = new PVector(mouseX,mouseY);
+    float x = 1*cos(theta)+width/2;
+    float y = 1*sin(theta)+height/2;
+    PVector mousePos = new PVector(x,y);
+    theta += 0.1;
+    displacement = PVector.sub(mousePos,new PVector(width/2,height/2));
+    displacement.normalize();
+    triPos = calcTrianglePos(new PVector(width/2,height/2), displacement, triangleBaseSize, sizeIncrease, triCount);
 
-  for(int i = triPos.size()-1; i >=0; i -= 3){
-    drawTriangle(triPos.get(i-2),triPos.get(i-1),triPos.get(i),color(
-      (int)map_range(i/3,0,triPos.size()/3,0,255)
-    ));
-  }
+    for(int i = triPos.size()-1; i >=0; i -= 3){
+      drawTriangle(triPos.get(i-2),triPos.get(i-1),triPos.get(i),color(
+        (int)map_range(i/3,0,triPos.size()/3,0,255)
+      ));
+    }
 
-  triPos.clear();
-  lastMousePos = new PVector(mouseX,mouseY);
+    triPos.clear();
+    lastMousePos = new PVector(mouseX,mouseY);
+  }
+  
   
   lastFrame = millis();
   print("Framerate: "+frameRate+" accTime: "+accTime+" triCount: "+triCount+"\n");
@@ -97,4 +99,10 @@ ArrayList<PVector> calcTrianglePos(PVector center, PVector centerDisplacement, f
   }
 
   return positions;
+}
+
+void keyPressed(){
+  if(key == 'x'){
+    running = !running;
+  }
 }
