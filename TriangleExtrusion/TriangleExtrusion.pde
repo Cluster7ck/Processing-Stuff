@@ -18,7 +18,7 @@ float theta = 0;
 
 void setup() {
   size(600, 600);
-  lastFrame = millis();  
+  lastFrame = millis();
   //Precalculate the triangle base values so we don't have to calc them every frame
   preSides = new float[count];
   preB = new float[count];
